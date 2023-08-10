@@ -1,10 +1,23 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from "./supabase.js";
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom'; // Use Routes instead of Switch
 import './App.css';
 
+
 function HomePage() {
-  // ... same code as above
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  async function getData() {
+    const { data } = await supabase.from("project4").select();
+    setData(data[0].name);
+  }
+
+  return <>{data}</>;
+
 }
 
 function OtherPage() {
