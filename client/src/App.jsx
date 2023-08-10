@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from "./supabase.js";
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom'; // Use Routes instead of Switch
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css';
-
+import { data  } from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js';
 
 function HomePage() {
   const [data, setData] = useState();
@@ -16,113 +16,73 @@ function HomePage() {
     setData(data[0].name);
   }
 
-  return <>{data}</>;
-
+  return <div className="home-page">{data}</div>;
 }
 
-function OtherPage() {
-  return <div>Place holder page</div>;
-}
-
-function SearchPage() {
-  const [country, setCountry] = React.useState('');
-  const [thematic, setThematic] = React.useState('');
-  const [minPrice, setMinPrice] = React.useState('');
-  const [maxPrice, setMaxPrice] = React.useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`Country: ${country}\nThematic: ${thematic}\nMin Price: ${minPrice}\nMax Price: ${maxPrice}`);
-  };
-
+function Information() {
   return (
-    <div>
-      <h2>Input Form</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Country:</label>
-          <select value={country} onChange={(e) => setCountry(e.target.value)}>
-            <option value="" disabled>Select a country</option>
-            <option value="Argentina">Argentina</option>
-            <option value="Australia">Australia</option>
-            <option value="Brazil">Brazil</option>
-            <option value="Canada">Canada</option>
-            <option value="China">China</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-            <option value="India">India</option>
-            <option value="Indonesia">Indonesia</option>
-            <option value="Italy">Italy</option>
-            <option value="Japan">Japan</option>
-            <option value="Mexico">Mexico</option>
-            <option value="Russia">Russia</option>
-            <option value="Saudi Arabia">Saudi Arabia</option>
-            <option value="South Africa">South Africa</option>
-            <option value="South Korea">South Korea</option>
-            <option value="Turkey">Turkey</option>
-            <option value="United Kingdom">United Kingdom</option>
-            <option value="United States">United States</option>
-            <option value="European Union">European Union</option>
-          </select>
-        </div>
-        <div>
-          <label>Thematic:</label>
-          <select value={thematic} onChange={(e) => setThematic(e.target.value)}>
-            <option value="" disabled>Select a sector</option>
-            <option value="Energy">Energy</option>
-            <option value="Materials">Materials</option>
-            <option value="Industrials">Industrials</option>
-            <option value="Consumer Discretionary">Consumer Discretionary</option>
-            <option value="Consumer Staples">Consumer Staples</option>
-            <option value="Health Care">Health Care</option>
-            <option value="Financials">Financials</option>
-            <option value="Information Technology">Information Technology</option>
-            <option value="Communication Services">Communication Services</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Real Estate">Real Estate</option>
-          </select>
-        </div>
-        <div>
-          <label>Price:</label>
-          <div>
-            <label>Min:</label>
-            <input
-              type="number"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              placeholder="Min Price"
-            />
-          </div>
-          <div>
-            <label>Max:</label>
-            <input
-              type="number"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              placeholder="Max Price"
-            />
-          </div>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <div className="information-page">
+      <h2><em>What is an EFT?</em></h2>
+      <p>Good question! An ETF is...</p>
+      <h2><em>Terminology</em></h2>
+      <p>Total Assets</p>
+      <p>Tracking Error</p>
+      <p>Total Return 1YR</p>
+      <p>Total Return 3YR</p>
+      <h3><em>How can you get started with trading?</em></h3>
+      <p>Good question!</p>
+
     </div>
   );
 }
 
-
-
-
+function SearchPage() {
+  return (
+    <div className="search-page">
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Name</th>
+            <th>Total Assets</th>
+            <th>Price</th>
+            <th>1 Year Total Return</th>
+            <th>3 Year Total Return</th>
+            <th>Tracking Error</th>
+            <th>Expense Ratio</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr key={index}>
+              <td>{item.Ticker}</td>
+              <td>{item.Name}</td>
+              <td>{item['Total Assets']}</td>
+              <td>{item.Price}</td>
+              <td>{item['1YR TR%']}%</td>
+              <td>{item['3YR TR%']}%</td>
+              <td>{item['Tracking Error']}</td>
+              <td>{item['Expense Ratio']}%</td>
+              <td>{item.Description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 function LoginPage() {
-  return <div>This is the login page.</div>;
+  return <div className="login-page">This is the login page.</div>;
 }
 
 function LogoutPage() {
-  return <div>You have been logged out.</div>;
+  return <div className="logout-page">You have been logged out.</div>;
 }
 
 function SignUpPage() {
-  return <div>This is the sign-up page.</div>;
+  return <div className="sign-up-page">This is the sign-up page.</div>;
 }
 
 function App() {
@@ -131,7 +91,7 @@ function App() {
       <div>
         <div className="navbar">
           <Link to="/">Home</Link> {' | '}
-          <Link to="/otherPage">Other Page</Link> {' | '}
+          <Link to="/Information">Information</Link> {' | '}
           <Link to="/search">Search</Link> {' | '}
           <Link to="/login">Login</Link> {' | '}
           <Link to="/logout">Log Out</Link> {' | '}
@@ -139,11 +99,11 @@ function App() {
         </div>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/otherPage" element={<OtherPage />} />
+          <Route path="/Information" element={<Information />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/login" element={<LoginPage />} /> {/* Added login route */}
-          <Route path="/logout" element={<LogoutPage />} /> {/* Added logout route */}
-          <Route path="/signUp" element={<SignUpPage />} /> {/* Added sign-up route */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
         </Routes>
       </div>
     </Router>

@@ -19,3 +19,56 @@ body {
 .content {
   padding-top: 60px; /* Adjust as needed depending on the size of your navbar */
 }
+
+/* App.css */
+.home-page {
+  /* styles for home page */
+}
+
+.information-page {
+  /* styles for information page */
+  color: black;
+}
+
+.search-page {
+  /* styles for search page */
+  color: black;
+}
+
+.search-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.search-page th,
+.search-page td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.search-page th {
+  background-color: #f2f2f2;
+}
+
+.search-page tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.search-page tr:hover {
+  background-color: #f5f5f5;
+}
+
+
+.login-page {
+  /* styles for login page */
+}
+
+.logout-page {
+  /* styles for logout page */
+}
+
+.sign-up-page {
+  /* styles for sign-up page */
+}
