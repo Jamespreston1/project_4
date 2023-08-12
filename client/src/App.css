@@ -30,15 +30,39 @@ body {
   color: black;
 }
 
+.information-page {
+  color: black;
+}
+
+.textContainer {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
+/* Style for h2 and h3 within textContainer */
+.textContainer h2,
+.textContainer h3 {
+  margin: 0; /* Remove default margin */
+}
+
+
+
+
 .search-page {
   /* styles for search page */
   color: black;
+  padding-top: 200px; /* or margin-top: 50px; */
 }
 
 .search-page table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
+  overflow-y: auto; /* Enables vertical scrolling */
+  display: block; /* Allows the overflow to work */
+  max-height: calc(100vh - 70px); /* Sets the max height, adjust as needed */
 }
 
 .search-page th,
@@ -59,6 +83,7 @@ body {
 .search-page tr:hover {
   background-color: #f5f5f5;
 }
+
 
 
 .login-page {

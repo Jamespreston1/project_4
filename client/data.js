@@ -1,5 +1,5 @@
 export const data = [
-    [
+    
         {
           "Ticker": "BBUS AU",
           "Name": "BETASHARES US EQ STR BEAR-CH",
@@ -1452,5 +1452,5 @@ export const data = [
           "Expense Ratio": "0.57",
           "Description": "Betashares Global Energy Companies ETF - Currency Hedged is an exchange-traded fund incorporated in Australia. The Fund aims to provide investment return that aims to track the performance of the Nasdaq Global ex-Australia Energy Companies Hedged AUD Index."
         }
-       ]
-]
+       
+];

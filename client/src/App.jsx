@@ -22,21 +22,33 @@ function HomePage() {
 function Information() {
   return (
     <div className="information-page">
-      <h2><em>What is an EFT?</em></h2>
-      <p>Good question! An ETF is...</p>
-      <h2><em>Terminology</em></h2>
-      <p>Total Assets</p>
-      <p>Tracking Error</p>
-      <p>Total Return 1YR</p>
-      <p>Total Return 3YR</p>
-      <h3><em>How can you get started with trading?</em></h3>
-      <p>Good question!</p>
+      <div className="textContainer">
+        <h2><em>What is an ETF?</em></h2>
+        <p>Good question! An ETF is...</p>
+        <h2> How is that different to a stock</h2>
+      </div>
 
+      <div className="textContainer">
+        <h2><em>Terminology</em></h2>
+        <p>Total Assets</p>
+        <p>Tracking Error</p>
+        <p>Total Return 1YR</p>
+        <p>Total Return 3YR</p>
+      </div>
+
+      <div className="textContainer">
+        <h3><em>How can you get started with trading?</em></h3>
+        <p>Good question!</p>
+      </div>
     </div>
   );
 }
 
+
+
+
 function SearchPage() {
+  console.log(data)
   return (
     <div className="search-page">
       <table>
