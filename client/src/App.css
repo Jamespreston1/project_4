@@ -47,22 +47,58 @@ body {
   margin: 0; /* Remove default margin */
 }
 
-
-
-
+/*  Search Page  */
 .search-page {
-  /* styles for search page */
   color: black;
-  padding-top: 200px; /* or margin-top: 50px; */
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-family: "Gill Sans", sans-serif; /* Set the font family for the text in the table */
+}
+
+.search-filters input[type="text"] {
+  border: 1px solid #000; /* Outline */
+  background-color: #fff;
+  padding: 10px 20px; /* Padding to make it rectangular */
+  margin-right: 10px; /* Spacing between input and buttons */
+  transition: border-color 0.3s; /* Transition for focus effect */
+  font-family:'Gill Sans', sans-serif
+}
+
+.search-filters input[type="text"]:focus {
+  border-color: #666; /* Border color on focus */
+}
+
+.search-filters button {
+  border: 1px solid #000; /* Outline */
+  background-color: #fff;
+  padding: 10px 20px; /* Padding to make them rectangular */
+  margin-right: 10px; /* Spacing between buttons */
+  cursor: pointer; /* Makes the cursor a hand to indicate it's clickable */
+  text-align: center; /* Center-align the text */
+  transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.search-filters button:hover {
+  background-color: #f0f0f0; /* Background color on hover */
+}
+
+.table-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 70px);
+  background-color: rgba(255, 255, 255, 0.75); /* Adjust this last value in background colour for transparency*/
 }
 
 .search-page table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
-  overflow-y: auto; /* Enables vertical scrolling */
-  display: block; /* Allows the overflow to work */
-  max-height: calc(100vh - 70px); /* Sets the max height, adjust as needed */
+}
+
+.search-page th:first-child,
+.search-page td:first-child {
+  width: 40px;
+  text-align: center;
 }
 
 .search-page th,
@@ -80,15 +116,17 @@ body {
   background-color: #f2f2f2;
 }
 
-.search-page tr:hover {
-  background-color: #f5f5f5;
-}
 
 
+
+
+/* Login Page */
 
 .login-page {
   /* styles for login page */
 }
+
+/* Logout Page */
 
 .logout-page {
   /* styles for logout page */

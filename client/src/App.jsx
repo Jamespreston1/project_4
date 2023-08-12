@@ -45,44 +45,78 @@ function Information() {
 }
 
 
-
-
 function SearchPage() {
-  console.log(data)
+  const [filter, setFilter] = useState('');
+  const [filteredData, setFilteredData] = useState(data);
+
+  const filterByTicker = () => {
+    setFilteredData(data.filter(item => item.Ticker.toLowerCase().includes(filter.toLowerCase())));
+  };
+
+  const filterByName = () => {
+    setFilteredData(data.filter(item => item.Name.toLowerCase().includes(filter.toLowerCase())));
+  };
+
+  const filterByDescription = () => {
+    setFilteredData(data.filter(item => item.Description.toLowerCase().includes(filter.toLowerCase())));
+  };
+
+  const resetFilter = () => {
+    setFilteredData(data);
+    setFilter('');
+  };
+
+  console.log(data);
+
   return (
     <div className="search-page">
-      <table>
-        <thead>
-          <tr>
-            <th>Ticker</th>
-            <th>Name</th>
-            <th>Total Assets</th>
-            <th>Price</th>
-            <th>1 Year Total Return</th>
-            <th>3 Year Total Return</th>
-            <th>Tracking Error</th>
-            <th>Expense Ratio</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td>{item.Ticker}</td>
-              <td>{item.Name}</td>
-              <td>{item['Total Assets']}</td>
-              <td>{item.Price}</td>
-              <td>{item['1YR TR%']}%</td>
-              <td>{item['3YR TR%']}%</td>
-              <td>{item['Tracking Error']}</td>
-              <td>{item['Expense Ratio']}%</td>
-              <td>{item.Description}</td>
+      <div className="search-filters">
+        <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter by..." />
+        <button onClick={filterByTicker}>Filter by Ticker</button>
+        <button onClick={filterByName}>Filter by Name</button>
+        <button onClick={filterByDescription}>Filter by Description</button>
+        <button onClick={resetFilter}>Reset</button>
+      </div>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Add to Portfolio</th>
+              <th>Ticker</th>
+              <th>Name</th>
+              <th>Total Assets</th>
+              <th>Price</th>
+              <th>1 Year Total Return</th>
+              <th>3 Year Total Return</th>
+              <th>Tracking Error</th>
+              <th>Expense Ratio</th>
+              <th>Description</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredData.map((item, index) => (
+              <tr key={index}>
+                <td><input type="checkbox" /></td>
+                <td>{item.Ticker}</td>
+                <td>{item.Name}</td>
+                <td>{item['Total Assets']}</td>
+                <td>{item.Price}</td>
+                <td>{item['1YR TR%']}%</td>
+                <td>{item['3YR TR%']}%</td>
+                <td>{item['Tracking Error']}</td>
+                <td>{item['Expense Ratio']}%</td>
+                <td>{item.Description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
+}
+
+function PortfolioPage() {
+  return <div className="portfolio-page">This is the portfolio page.</div>;
 }
 
 function LoginPage() {
@@ -105,17 +139,21 @@ function App() {
           <Link to="/">Home</Link> {' | '}
           <Link to="/Information">Information</Link> {' | '}
           <Link to="/search">Search</Link> {' | '}
+          <Link to="/portfolio">Portfolio</Link> {' | '}
           <Link to="/login">Login</Link> {' | '}
           <Link to="/logout">Log Out</Link> {' | '}
-          <Link to="/signUp">Sign Up</Link>
+          <Link to="/signUp">Sign Up</Link> 
+          
         </div>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Information" element={<Information />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={<LogoutPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
+          
         </Routes>
       </div>
     </Router>
