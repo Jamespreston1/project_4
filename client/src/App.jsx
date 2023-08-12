@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from "./supabase.js";
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css';
-import { data  } from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js';
+import { data } from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js';
 
 function HomePage() {
   const [data, setData] = useState();
@@ -25,7 +25,7 @@ function Information() {
       <div className="textContainer">
         <h2><em>What is an ETF?</em></h2>
         <p>Good question! An ETF is...</p>
-        <h2> How is that different to a stock</h2>
+        <h2>How is that different to a stock</h2>
       </div>
 
       <div className="textContainer">
@@ -44,10 +44,10 @@ function Information() {
   );
 }
 
-
 function SearchPage({ selectedItems, setSelectedItems }) {
   const [filter, setFilter] = useState('');
   const [filteredData, setFilteredData] = useState(data);
+  const [tempSelectedItems, setTempSelectedItems] = useState([]);
 
   const filterByTicker = () => {
     setFilteredData(data.filter(item => item.Ticker.toLowerCase().includes(filter.toLowerCase())));
@@ -64,18 +64,21 @@ function SearchPage({ selectedItems, setSelectedItems }) {
   const resetFilter = () => {
     setFilteredData(data);
     setFilter('');
+    setTempSelectedItems([]);
   };
 
-  console.log(data);
+  const buildPortfolio = () => {
+    setSelectedItems(tempSelectedItems);
+    setTempSelectedItems([]);
+  };
 
   const handleCheckboxChange = (item, isChecked) => {
     if (isChecked) {
-      setSelectedItems([...selectedItems, item]);
+      setTempSelectedItems([...tempSelectedItems, item]);
     } else {
-      setSelectedItems(selectedItems.filter(selectedItem => selectedItem !== item));
+      setTempSelectedItems(tempSelectedItems.filter(selectedItem => selectedItem !== item));
     }
   };
-
 
   return (
     <div className="search-page">
@@ -85,12 +88,14 @@ function SearchPage({ selectedItems, setSelectedItems }) {
         <button onClick={filterByName}>Filter by Name</button>
         <button onClick={filterByDescription}>Filter by Description</button>
         <button onClick={resetFilter}>Reset</button>
+        <button onClick={buildPortfolio}>Build My Portfolio</button>
       </div>
       <div className="table-container">
         <table>
           <thead>
             <tr>
               <th>Add to Portfolio</th>
+              <th></th> {/* Placeholder for Action column */}
               <th>Ticker</th>
               <th>Name</th>
               <th>Total Assets</th>
@@ -105,9 +110,14 @@ function SearchPage({ selectedItems, setSelectedItems }) {
           <tbody>
             {filteredData.map((item, index) => (
               <tr key={index}>
-                <td><input
-                type="checkbox"
-                onChange={(e) => handleCheckboxChange(item, e.target.checked)}/></td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={tempSelectedItems.includes(item)}
+                    onChange={(e) => handleCheckboxChange(item, e.target.checked)}
+                  />
+                </td>
+                <td></td> {/* Placeholder for Action column */}
                 <td>{item.Ticker}</td>
                 <td>{item.Name}</td>
                 <td>{item['Total Assets']}</td>
@@ -126,16 +136,21 @@ function SearchPage({ selectedItems, setSelectedItems }) {
   );
 }
 
-function PortfolioPage() {
-  return <div className="portfolio-page">This is the portfolio page.</div>;
-}
-function Portfolios({ selectedItems }) {
+function Portfolios({ selectedItems, setSelectedItems }) {
+  const deleteItem = (index) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems.splice(index, 1);
+    setSelectedItems(newSelectedItems);
+  };
+
   return (
     <div className="portfolios-page">
       <div className="table-container">
         <table>
           <thead>
             <tr>
+              <th>Remove</th>
+              <th>Action</th>
               <th>Ticker</th>
               <th>Name</th>
               <th>Total Assets</th>
@@ -150,6 +165,10 @@ function Portfolios({ selectedItems }) {
           <tbody>
             {selectedItems.map((item, index) => (
               <tr key={index}>
+                <td>
+                  <button onClick={() => deleteItem(index)}>Remove</button> 
+                </td>
+                <td></td> {/* Placeholder for Action column */}
                 <td>{item.Ticker}</td>
                 <td>{item.Name}</td>
                 <td>{item['Total Assets']}</td>
@@ -181,7 +200,6 @@ function SignUpPage() {
 }
 
 function App() {
-
   const [selectedItems, setSelectedItems] = useState([]); 
 
   return (
@@ -193,12 +211,10 @@ function App() {
           <Link to="/search">Search</Link> {' | '}
           <Link to="/portfolios">Portfolios</Link> {' | '}
           <Link to="/login">Login</Link> {' | '}
-          <Link to="/logout">Log Out</Link> {' | '}
-          <Link to="/signUp">Sign Up</Link> 
-          
+          <Link to="/logout">Logout</Link> {' | '}
+          <Link to="/signUp">Sign Up</Link>
         </div>
         <Routes>
-        
           <Route path="/" element={<HomePage />} />
           <Route path="/Information" element={<Information />} />
           <Route path="/search" element={<SearchPage selectedItems={selectedItems} setSelectedItems={setSelectedItems} />} />
@@ -206,7 +222,6 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={<LogoutPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
-          
         </Routes>
       </div>
     </Router>

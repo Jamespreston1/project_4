@@ -116,8 +116,68 @@ body {
   background-color: #f2f2f2;
 }
 
+/* 
+Portfolios Page  */
 
+.portfolios-page {
+  color: black;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-family: "Gill Sans", sans-serif;
+}
 
+.portfolios-page .table-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 70px);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.portfolios-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.portfolios-page th:first-child,
+.portfolios-page td:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+.portfolios-page th,
+.portfolios-page td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.portfolios-page th {
+  background-color: #f2f2f2;
+}
+
+.portfolios-page tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.portfolios-page th:first-child,
+.portfolios-page td:first-child {
+  width: 80px; /* You can adjust this width */
+  text-align: center;
+}
+
+.portfolios-page button {
+  border: 1px solid #000;
+  background-color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.portfolios-page button:hover {
+  background-color: #f0f0f0;
+}
 
 
 /* Login Page */
