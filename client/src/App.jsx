@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css';
 import { data } from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js';
 
+
 function HomePage() {
   const [data, setData] = useState();
 
@@ -95,7 +96,6 @@ function SearchPage({ selectedItems, setSelectedItems }) {
           <thead>
             <tr>
               <th>Add to Portfolio</th>
-              <th></th> {/* Placeholder for Action column */}
               <th>Ticker</th>
               <th>Name</th>
               <th>Total Assets</th>
@@ -117,7 +117,6 @@ function SearchPage({ selectedItems, setSelectedItems }) {
                     onChange={(e) => handleCheckboxChange(item, e.target.checked)}
                   />
                 </td>
-                <td></td> {/* Placeholder for Action column */}
                 <td>{item.Ticker}</td>
                 <td>{item.Name}</td>
                 <td>{item['Total Assets']}</td>
@@ -150,7 +149,6 @@ function Portfolios({ selectedItems, setSelectedItems }) {
           <thead>
             <tr>
               <th>Remove</th>
-              <th>Action</th>
               <th>Ticker</th>
               <th>Name</th>
               <th>Total Assets</th>
@@ -168,7 +166,6 @@ function Portfolios({ selectedItems, setSelectedItems }) {
                 <td>
                   <button onClick={() => deleteItem(index)}>Remove</button> 
                 </td>
-                <td></td> {/* Placeholder for Action column */}
                 <td>{item.Ticker}</td>
                 <td>{item.Name}</td>
                 <td>{item['Total Assets']}</td>
@@ -195,9 +192,125 @@ function LogoutPage() {
   return <div className="logout-page">You have been logged out.</div>;
 }
 
+// Sign up Page 
 function SignUpPage() {
-  return <div className="sign-up-page">This is the sign-up page.</div>;
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [errors, setErrors] = useState({});
+
+  const emailOptions = ['@outlook.com', '@gmail.com', '@hotmail.com', '@test.com'];
+
+  const validate = () => {
+    let isValid = true;
+    let errors = {};
+
+    // Name validation
+    if (!form.name || /\d/.test(form.name)) {
+      isValid = false;
+      errors.name = 'Name cannot contain numbers';
+    }
+
+    // Email validation
+    if (!form.email || !/^\S+@\S+\.\S+$/.test(form.email)) {
+      isValid = false;
+      errors.email = 'Please enter a valid email';
+    }
+
+    // Password validation
+    if (!form.password || !/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/.test(form.password)) {
+      isValid = false;
+      errors.password = 'Password must contain at least one letter, one number, and be 8 characters long';
+    }
+
+    // Confirm password validation
+    if (form.password !== form.confirmPassword) {
+      isValid = false;
+      errors.confirmPassword = 'Passwords must match';
+    }
+
+    setErrors(errors);
+    return isValid;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      // Submit the sign-up form
+      console.log('Sign-up form submitted successfully');
+    }
+  };
+
+  return (
+    <div className="sign-up-page">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            pattern="[a-zA-Z\s]*"
+            title="Name cannot contain numbers"
+          />
+          {errors.name && <div className="error">{errors.name}</div>}
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            list="emailOptions"
+          />
+          <datalist id="emailOptions">
+            {emailOptions.map((option, index) => (
+              <option key={index} value={option} />
+            ))}
+          </datalist>
+          {errors.email && <div className="error">{errors.email}</div>}
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            pattern="^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
+            title="Password must contain at least one letter, one number, and be 8 characters long"
+          />
+          {errors.password && <div className="error">{errors.password}</div>}
+        </div>
+        <div>
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={form.confirmPassword}
+            onChange={handleChange}
+          />
+          {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  );
 }
+
 
 function App() {
   const [selectedItems, setSelectedItems] = useState([]); 
@@ -218,7 +331,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/Information" element={<Information />} />
           <Route path="/search" element={<SearchPage selectedItems={selectedItems} setSelectedItems={setSelectedItems} />} />
-          <Route path="/portfolios" element={<Portfolios selectedItems={selectedItems} />} />
+          <Route path="/portfolios" element={<Portfolios selectedItems={selectedItems} setSelectedItems={setSelectedItems} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={<LogoutPage />} />
           <Route path="/signUp" element={<SignUpPage />} />

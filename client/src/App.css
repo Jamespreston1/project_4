@@ -1,34 +1,25 @@
 body {
   background-image: url('https://www.aeccglobal.sg/images/2023/01/31/finance-course.webp');
-  background-size: 100% 100%; /* Scale the background image to fill the entire container */
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-attachment: scroll; /* Allows the background to scroll with the window's content */
+  background-attachment: scroll;
 }
 
 .navbar {
-  position: fixed; /* Fixed positioning */
-  top: 0; /* Aligns to the top */
-  left: 0; /* Aligns to the left */
-  width: 100%; /* Full width */
-  background-color: #f0f0f0; /* Background color */
-  padding: 10px; /* Some padding for visual appeal */
-  z-index: 1000; /* Ensures that the navbar stays above other content */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  z-index: 1000;
 }
 
-/* Add some padding to the content so it doesn't overlap with the navbar */
 .content {
-  padding-top: 60px; /* Adjust as needed depending on the size of your navbar */
+  padding-top: 60px;
 }
 
-/* App.css */
-.home-page {
-  /* styles for home page */
-}
-
-.information-page {
-  /* styles for information page */
-  color: black;
-}
+.home-page {}
 
 .information-page {
   color: black;
@@ -41,52 +32,50 @@ body {
   background-color: #f9f9f9;
 }
 
-/* Style for h2 and h3 within textContainer */
 .textContainer h2,
 .textContainer h3 {
-  margin: 0; /* Remove default margin */
+  margin: 0;
 }
 
-/*  Search Page  */
 .search-page {
   color: black;
   padding-top: 50px;
   padding-left: 50px;
   padding-right: 50px;
-  font-family: "Gill Sans", sans-serif; /* Set the font family for the text in the table */
+  font-family: "Gill Sans", sans-serif;
 }
 
 .search-filters input[type="text"] {
-  border: 1px solid #000; /* Outline */
+  border: 1px solid #000;
   background-color: #fff;
-  padding: 10px 20px; /* Padding to make it rectangular */
-  margin-right: 10px; /* Spacing between input and buttons */
-  transition: border-color 0.3s; /* Transition for focus effect */
+  padding: 10px 20px;
+  margin-right: 10px;
+  transition: border-color 0.3s;
   font-family:'Gill Sans', sans-serif
 }
 
 .search-filters input[type="text"]:focus {
-  border-color: #666; /* Border color on focus */
+  border-color: #666;
 }
 
 .search-filters button {
-  border: 1px solid #000; /* Outline */
+  border: 1px solid #000;
   background-color: #fff;
-  padding: 10px 20px; /* Padding to make them rectangular */
-  margin-right: 10px; /* Spacing between buttons */
-  cursor: pointer; /* Makes the cursor a hand to indicate it's clickable */
-  text-align: center; /* Center-align the text */
-  transition: background-color 0.3s; /* Transition for hover effect */
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
 }
 
 .search-filters button:hover {
-  background-color: #f0f0f0; /* Background color on hover */
+  background-color: #f0f0f0;
 }
 
 .table-container {
   overflow-y: auto;
   max-height: calc(100vh - 70px);
-  background-color: rgba(255, 255, 255, 0.75); /* Adjust this last value in background colour for transparency*/
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .search-page table {
@@ -116,12 +105,9 @@ body {
   background-color: #f2f2f2;
 }
 
-/* 
-Portfolios Page  */
-
 .portfolios-page {
   color: black;
-  padding-top: 50px;
+  padding-top: 1px;
   padding-left: 50px;
   padding-right: 50px;
   font-family: "Gill Sans", sans-serif;
@@ -141,7 +127,7 @@ Portfolios Page  */
 
 .portfolios-page th:first-child,
 .portfolios-page td:first-child {
-  width: 40px;
+  width: 80px;
   text-align: center;
 }
 
@@ -160,12 +146,6 @@ Portfolios Page  */
   background-color: #f2f2f2;
 }
 
-.portfolios-page th:first-child,
-.portfolios-page td:first-child {
-  width: 80px; /* You can adjust this width */
-  text-align: center;
-}
-
 .portfolios-page button {
   border: 1px solid #000;
   background-color: #fff;
@@ -179,19 +159,33 @@ Portfolios Page  */
   background-color: #f0f0f0;
 }
 
-
-/* Login Page */
-
-.login-page {
-  /* styles for login page */
+.search-page th,
+.portfolios-page th {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  z-index: 10;
 }
+.login-page {}
 
-/* Logout Page */
-
-.logout-page {
-  /* styles for logout page */
-}
+.logout-page {}
 
 .sign-up-page {
-  /* styles for sign-up page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 20px;
+  background-color: rgba(255, 255, 255, 0.75); /* Adding a wash effect */
 }
+
+.signup-form-container {
+  background-color: #fff; /* Solid white background */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+
+
