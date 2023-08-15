@@ -47,7 +47,7 @@ body {
 
 .search-filters input[type="text"] {
   border: 1px solid #000;
-  background-color: #fff;
+  background-color: black;
   padding: 10px 20px;
   margin-right: 10px;
   transition: border-color 0.3s;
@@ -56,6 +56,7 @@ body {
 
 .search-filters input[type="text"]:focus {
   border-color: #666;
+  width: 150px;
 }
 
 .search-filters button {
@@ -66,6 +67,7 @@ body {
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s;
+  color: black;
 }
 
 .search-filters button:hover {
@@ -73,6 +75,7 @@ body {
 }
 
 .table-container {
+  margin-top:10px;
   overflow-y: auto;
   max-height: calc(100vh - 70px);
   background-color: rgba(255, 255, 255, 0.75);
@@ -148,7 +151,7 @@ body {
 
 .portfolios-page button {
   border: 1px solid #000;
-  background-color: #fff;
+  background-color: black;
   padding: 5px 10px;
   cursor: pointer;
   text-align: center;
@@ -157,6 +160,29 @@ body {
 
 .portfolios-page button:hover {
   background-color: #f0f0f0;
+}
+
+/* Adjust the specificity for the .build-portfolio-button styles */
+.search-filters .build-portfolio-button {
+  background-color: grey;
+  color: #999;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.search-filters .build-portfolio-button:hover {
+  background-color: green;
+
+}
+
+.search-filters .build-portfolio-button.active {
+  background-color: green;
+  color: white;
+}
+
+.search-filters .build-portfolio-button.active:hover {
+  background-color: darkgreen;
+  cursor: pointer;
 }
 
 .search-page th,
@@ -168,24 +194,115 @@ body {
 }
 .login-page {}
 
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 8px;
+}
+
+.login-container h1 {
+  color: black;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  color:black;
+}
+
+.signInButton {
+  background-color: #007bff;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* button {
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+} */
+
+/* button:hover {
+  background-color: #0056b3;
+} */
+
+
 .logout-page {}
 
+
+
 .sign-up-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding-top: 20px;
-  background-color: rgba(255, 255, 255, 0.75); /* Adding a wash effect */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px; /* Adjusted width to accommodate the larger form */
+  padding: 30px; /* Increased padding for better appearance */
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 8px;
+  color:black;
 }
 
-.signup-form-container {
-  background-color: #fff; /* Solid white background */
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+.sign-up-page label {
+  display: block;
+  margin-bottom: 5px;
 }
+
+.sign-up-page input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.sign-up-page .error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.sign-up-page button {
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.sign-up-page button:hover {
+  background-color: #0056b3;
+}
+
+
+
+
 
 
 

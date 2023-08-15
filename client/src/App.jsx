@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from "./supabase.js";
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css';
+import bcrypt from 'bcryptjs';
 import { data } from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+
+
+// --------------------------------------------------- Home Page 
 
 function HomePage() {
   const [data, setData] = useState();
@@ -19,6 +25,8 @@ function HomePage() {
 
   return <div className="home-page">{data}</div>;
 }
+
+// --------------------------------------------------- Information Page 
 
 function Information() {
   return (
@@ -44,6 +52,8 @@ function Information() {
     </div>
   );
 }
+
+// --------------------------------------------------- Search Page 
 
 function SearchPage({ selectedItems, setSelectedItems }) {
   const [filter, setFilter] = useState('');
@@ -89,7 +99,10 @@ function SearchPage({ selectedItems, setSelectedItems }) {
         <button onClick={filterByName}>Filter by Name</button>
         <button onClick={filterByDescription}>Filter by Description</button>
         <button onClick={resetFilter}>Reset</button>
-        <button onClick={buildPortfolio}>Build My Portfolio</button>
+        <button   style={{backgroundColor: tempSelectedItems.length > 0 ? 'green' : 'grey'}} onClick={buildPortfolio}
+>
+  Build My Portfolio
+</button>
       </div>
       <div className="table-container">
         <table>
@@ -134,6 +147,8 @@ function SearchPage({ selectedItems, setSelectedItems }) {
     </div>
   );
 }
+
+// --------------------------------------------------- Portfolios Page 
 
 function Portfolios({ selectedItems, setSelectedItems }) {
   const deleteItem = (index) => {
@@ -184,15 +199,69 @@ function Portfolios({ selectedItems, setSelectedItems }) {
   );
 }
 
+// --------------------------------------------------- Log In Page 
 function LoginPage() {
-  return <div className="login-page">This is the login page.</div>;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    
+    console.log('Logging in with email:', email, 'and password:', password);
+  };
+
+  return (
+    <div className="login-container">
+      <h1>Login</h1>
+      <div className="form-group">
+        <label htmlFor="email">Email Address:</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
+      <button className="signInButton" onClick={handleLogin}>Login</button>
+    </div>
+  );
 }
 
+// --------------------------------------------------- Log Out Page 
 function LogoutPage() {
-  return <div className="logout-page">You have been logged out.</div>;
+  const handleLogout = () => {
+    
+    // Trigger the toast notification
+    toast.success('You have been successfully logged out', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+  return (
+    <div className="logout-container">
+      <h1>Are you sure you want to log out?</h1>
+      <button onClick={handleLogout}>Yes, logout</button>
+    </div>
+  );
 }
 
-// Sign up Page 
+// --------------------------------------------------- Sign up Page 
 function SignUpPage() {
   const [form, setForm] = useState({
     name: '',
@@ -254,6 +323,7 @@ function SignUpPage() {
 
   return (
     <div className="sign-up-page">
+      <h1> Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
@@ -311,7 +381,7 @@ function SignUpPage() {
   );
 }
 
-
+// --------------------------------------------------- App routing  
 function App() {
   const [selectedItems, setSelectedItems] = useState([]); 
 
