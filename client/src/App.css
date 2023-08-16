@@ -20,7 +20,14 @@ body {
   padding-top: 60px;
 }
 
-.home-page {}
+.home-page h1,p {
+  margin-top:0px;
+  justify-content: center;
+}
+
+.footerComment {
+  margin-bottom: 10px;
+}
 
 .information-page {
   color: black;
@@ -119,6 +126,7 @@ body {
   padding-left: 50px;
   padding-right: 50px;
   font-family: "Gill Sans", sans-serif;
+  margin-top: 10px;
 }
 
 .portfolios-page .table-container {

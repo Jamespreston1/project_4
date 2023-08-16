@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Auth } from '@supabase/auth-ui-react'
 import { supabase } from "./supabase.js";
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
 import './App.css';
 import bcrypt from 'bcryptjs';
 import { data } from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
 
 // --------------------------------------------------- Home Page 
 
@@ -19,12 +18,19 @@ function HomePage() {
   }, []);
 
   async function getData() {
-    // const { data } = await supabase.from("project4").select();
+    // const { data } = await supabase.from("users").select();
     setData(data[0].name);
   }
 
   return <div className="home-page">
-    {data}</div>;
+    {/* {data} */} 
+    <h1> Welcome to <em><strong>What the ETF!</strong></em></h1> 
+    <p> <strong>We're here to learn about ETF's, do some research and hopefully, get trading! </strong> </p> 
+    
+    <p className="footerComment"> Created by James Preston</p>
+    </div>;
+
+  
 }
 
 // --------------------------------------------------- Information Page 
@@ -106,6 +112,7 @@ function Information() {
         <p>
         <strong>Disclaimer!</strong> Remember, when choosing a brokerage, it's essential to consider fees, platform usability, available assets, customer service, and any other features important to you. It might also be beneficial to consult current reviews or news regarding these platforms, as the industry can change, and new players might emerge or old ones might innovate.
         </p>
+        <p className="footerComment"> Created by James Preston</p>
       </div>
     </div>
   );
@@ -203,6 +210,7 @@ function SearchPage({ selectedItems, setSelectedItems }) {
           </tbody>
         </table>
       </div>
+      <p className="footerComment"> Created by James Preston</p>
     </div>
   );
 }
@@ -254,18 +262,26 @@ function Portfolios({ selectedItems, setSelectedItems }) {
           </tbody>
         </table>
       </div>
+      <p className="footerComment"> Created by James Preston</p>
     </div>
   );
 }
 
 // --------------------------------------------------- Log In Page 
+
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    
-    console.log('Logging in with email:', email, 'and password:', password);
+  const handleLogin = async () => {
+    const { user, error } = await supabase.auth.signIn({ email, password });
+
+    if (error) {
+      console.error("Error logging in:", error.message);
+    } else {
+      console.log("Logged in as:", user.email);
+    }
   };
 
   return (
@@ -292,150 +308,238 @@ function LoginPage() {
         />
       </div>
       <button className="signInButton" onClick={handleLogin}>Login</button>
+      <p className="footerComment"> Created by James Preston</p>
     </div>
   );
 }
+
+
 
 // --------------------------------------------------- Log Out Page 
 function LogoutPage() {
-  const handleLogout = () => {
-    
-    // Trigger the toast notification
-    toast.success('You have been successfully logged out', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  const [confirmLogout, setConfirmLogout] = useState(false);
+
+  const handleLogoutConfirmation = () => {
+    setConfirmLogout(true);
   };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Error signing out:", error.message);
+      toast.error('Error logging out. Please try again.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.success('Log out successful', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      // Redirecting back to the login page after a successful logout using window.location
+      window.location.href = "/login";
+    }
+  };
+
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
+        // Handle the post-sign-out logic here if you want
+      }
+    });
+
+    // Cleanup the listener on component unmount
+    return () => {
+      authListener?.unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="logout-container">
-      <h1>Are you sure you want to log out?</h1>
-      <button onClick={handleLogout}>Yes, logout</button>
+      {!confirmLogout ? (
+        <>
+          <h1>Are you sure you want to log out?</h1>
+          <button onClick={handleLogoutConfirmation}>Yes, I want to logout</button>
+        </>
+      ) : (
+        <>
+          <h1>Logging you out...</h1>
+          {handleLogout()}
+        </>
+      )}
     </div>
   );
 }
 
-// --------------------------------------------------- Sign up Page 
+
+// --------------------------------------------------- Sign up Page (Supabase)
+
 function SignUpPage() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const [errors, setErrors] = useState({});
-
-  const emailOptions = ['@outlook.com', '@gmail.com', '@hotmail.com', '@test.com'];
-
-  const validate = () => {
-    let isValid = true;
-    let errors = {};
-
-    // Name validation
-    if (!form.name || /\d/.test(form.name)) {
-      isValid = false;
-      errors.name = 'Name cannot contain numbers';
-    }
-
-    // Email validation
-    if (!form.email || !/^\S+@\S+\.\S+$/.test(form.email)) {
-      isValid = false;
-      errors.email = 'Please enter a valid email';
-    }
-
-    // Password validation
-    if (!form.password || !/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/.test(form.password)) {
-      isValid = false;
-      errors.password = 'Password must contain at least one letter, one number, and be 8 characters long';
-    }
-
-    // Confirm password validation
-    if (form.password !== form.confirmPassword) {
-      isValid = false;
-      errors.confirmPassword = 'Passwords must match';
-    }
-
-    setErrors(errors);
-    return isValid;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      // Submit the sign-up form
-      console.log('Sign-up form submitted successfully');
-    }
-  };
-
   return (
     <div className="sign-up-page">
       <h1> Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            pattern="[a-zA-Z\s]*"
-            title="Name cannot contain numbers"
-          />
-          {errors.name && <div className="error">{errors.name}</div>}
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            list="emailOptions"
-          />
-          <datalist id="emailOptions">
-            {emailOptions.map((option, index) => (
-              <option key={index} value={option} />
-            ))}
-          </datalist>
-          {errors.email && <div className="error">{errors.email}</div>}
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            pattern="^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
-            title="Password must contain at least one letter, one number, and be 8 characters long"
-          />
-          {errors.password && <div className="error">{errors.password}</div>}
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={form.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
+      <Auth supabaseClient={supabase} />
+      <p className="footerComment"> Created by James Preston</p>
+    </div>
+  );
+}
+
+
+// --------------------------------------------------- Sign up Page (pre-Supabase)
+
+// function SignUpPage() {
+//   const [form, setForm] = useState({
+//     name: '',
+//     email: '',
+//     password: '',
+//     confirmPassword: '',
+//   });
+//   const [errors, setErrors] = useState({});
+
+//   const emailOptions = ['@outlook.com', '@gmail.com', '@hotmail.com', '@test.com'];
+
+//   const validate = () => {
+//     let isValid = true;
+//     let errors = {};
+
+//     if (!form.name || /\d/.test(form.name)) {
+//       isValid = false;
+//       errors.name = 'Name cannot contain numbers';
+//     }
+
+//     if (!form.email || !/^\S+@\S+\.\S+$/.test(form.email)) {
+//       isValid = false;
+//       errors.email = 'Please enter a valid email';
+//     }
+
+//     if (!form.password || !/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/.test(form.password)) {
+//       isValid = false;
+//       errors.password = 'Password must contain at least one letter, one number, and be 8 characters long';
+//     }
+
+//     if (form.password !== form.confirmPassword) {
+//       isValid = false;
+//       errors.confirmPassword = 'Passwords must match';
+//     }
+
+//     setErrors(errors);
+//     return isValid;
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setForm({
+//       ...form,
+//       [name]: value,
+//     });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (validate()) {
+//       const { user, error } = await supabase.auth.signUp({
+//         email: form.email,
+//         password: form.password,
+//       });
+
+//       if (error) {
+//         console.error("Error signing up:", error.message);
+//       } else if (user) {
+//         const { data, insertError } = await supabase
+//           .from('users')
+//           .insert([
+//             { id: user.id, name: form.name }
+//           ]);
+
+//         if (insertError) {
+//           console.error("Error storing user data:", insertError.message);
+//         } else {
+//           console.log('User data stored:', data);
+//         }
+//       }
+//     }
+//   };
+
+//   return (
+//     <div className="sign-up-page">
+//       <h1> Sign Up</h1>
+//       <div>
+//         <label>Name:</label>
+//         <input
+//           type="text"
+//           name="name"
+//           value={form.name}
+//           onChange={handleChange}
+//           pattern="[a-zA-Z\s]*"
+//           title="Name cannot contain numbers"
+//         />
+//         {errors.name && <div className="error">{errors.name}</div>}
+//       </div>
+
+//       <Auth supabaseClient={supabase} />
+
+//       {/* <form onSubmit={handleSubmit}>
+//         <div>
+//           <label>Email:</label>
+//           <input
+//             type="email"
+//             name="email"
+//             value={form.email}
+//             onChange={handleChange}
+//             list="emailOptions"
+//           />
+//           <datalist id="emailOptions">
+//             {emailOptions.map((option, index) => (
+//               <option key={index} value={option} />
+//             ))}
+//           </datalist>
+//           {errors.email && <div className="error">{errors.email}</div>}
+//         </div>
+//         <div>
+//           <label>Password:</label>
+//           <input
+//             type="password"
+//             name="password"
+//             value={form.password}
+//             onChange={handleChange}
+//             pattern="^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
+//             title="Password must contain at least one letter, one number, and be 8 characters long"
+//           />
+//           {errors.password && <div className="error">{errors.password}</div>}
+//         </div>
+//         <div>
+//           <label>Confirm Password:</label>
+//           <input
+//             type="password"
+//             name="confirmPassword"
+//             value={form.confirmPassword}
+//             onChange={handleChange}
+//           />
+//           {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
+//         </div>
+//         <button type="submit">Sign Up</button>
+//       </form> */}
+//     </div>
+//   );
+// }
+
+// --------------------------------------------------- Supabase UI   
+function AuthComponent() {
+  return (
+    <div>
+      <Auth supabaseCliient={supabase} />
     </div>
   );
 }
@@ -452,9 +556,10 @@ function App() {
           <Link to="/Information">Information</Link> {' | '}
           <Link to="/search">Search</Link> {' | '}
           <Link to="/portfolios">Portfolios</Link> {' | '}
-          <Link to="/login">Login</Link> {' | '}
-          <Link to="/logout">Logout</Link> {' | '}
-          <Link to="/signUp">Sign Up</Link>
+          {/* <Link to="/login">Login</Link> {' | '} */} 
+          <Link to="/signUp">Login or Sign Up</Link> {' | '}
+          <Link to="/logout">Logout</Link> 
+          
         </div>
         <Routes>
           <Route path="/" element={<HomePage />} />
