@@ -19,10 +19,12 @@ const { error } = await supabase
 
 
     const getPortfolio = async () => {
+    const  data2    = await supabase.auth.getUser()
+    console.log(data2);
     let { data: securities, error } = await supabase
     .from('securities')
     .select('*')
-    .eq("email","preston_104@hotmail.com")
+    .eq("email",data2.user.email)
     console.log(securities);
     setinsertPortfolio(securities)
     }
