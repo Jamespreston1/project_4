@@ -67,6 +67,8 @@ function LogoutPage() {
             {handleLogout()}
           </>
         )}
+
+<p className="footerComment"> Created by James Preston</p>
       </div>
     );
   }

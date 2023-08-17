@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 function HomePage() {
-    const [data, setData] = useState();
+    // const [data, setData] = useState();
   
-    useEffect(() => {
-      getData();
-    }, []);
+    // useEffect(() => {
+    //   getData();
+    // }, []);
   
-    async function getData() {
-      // const { data } = await supabase.from("users").select();
-      setData(data[0].name);
-    }
+    // async function getData() {
+    //   // const { data } = await supabase.from("users").select();
+    //   setData(data[0].name);
+    // }
   
     return <div className="home-page">
       {/* {data} */} 

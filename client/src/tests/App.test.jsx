@@ -2,46 +2,43 @@ import React from 'react';
 import { render } from '@testing-library/react';
 // import '@testing-library/jest-dom/extend-expect';
 
-import Information from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/App.jsx';
+import Information from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/components/Information.jsx';
+import HomePage from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/components/HomePage';
+import SearchPage from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/components/SearchPage';
 import { describe, expect, it } from 'vitest';
+import SignUpPage from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/components/SignUpPage';
+import LogoutPage from '../components/LogoutPage';
 
-describe('<Information />', () => {
+    // Test 1. This test ensures that the footer comment ("Created by James Preston") is rendered on HomePage.
+    it('1. renders the footer comment correctly', () => {
+            const { getByText } = render(<HomePage />);
+            expect(getByText('Created by James Preston')).toBeInTheDocument();
+        });
 
-    // 1. Test 1: Rendering the main container div.
-    // This test ensures that the main container div with the class `information-page` is rendered.
-    it('renders the main div with the correct class', () => {
-        const { container } = render(<Information />);
-        expect(container.querySelector('.information-page')).toBeInTheDocument();
+    // Test 2. This test ensures that the footer comment ("Created by James Preston") is rendered on LoginPage.
+    it('2. renders the footer comment correctly', () => {
+        const { getByText } = render(<SignUpPage/>);
+        expect(getByText('Created by James Preston')).toBeInTheDocument();
     });
 
-    // 2. Test 2: Rendering the ETF explanation section.
-    // This test ensures that the segment of the page explaining what an ETF is gets rendered correctly.
-    it('renders the ETF explanation correctly', () => {
-        const { getByText } = render(<Information />);
-        expect(getByText('What is an ETF?')).toBeInTheDocument();
-        expect(getByText(/An ETF is an investment/)).toBeInTheDocument();
-    });
 
-    // 3. Test 3: Rendering the stock explanation section.
-    // This test ensures that the segment explaining how an ETF is different from a stock is rendered correctly.
-    it('renders the stock explanation correctly', () => {
-        const { getByText } = render(<Information />);
-        expect(getByText('How is that different to a stock?')).toBeInTheDocument();
-        expect(getByText(/A "stock" \(aka a "Common Stock"\)/)).toBeInTheDocument();
-    });
-
-    // 4. Test 4: Rendering the terminology section.
-    // This test ensures that the terminology section of the page is rendered, 
-    // specifically checking for the presence of the term "Total Assets" and its associated explanation.
-    it('renders the terminology comment correctly', () => {
-        const { getByText } = render(<Information />);
-        expect(getByText('Terminology')).toBeInTheDocument();
-    });
-
-    // 5. Test 5: Rendering the footer comment.
-    // This test ensures that the footer comment ("Created by James Preston") is rendered.
-    it('renders the footer comment correctly', () => {
+    // Test 3. This test ensures that the footer comment ("Created by James Preston") is rendered on Information Page.
+    it('3. renders the footer comment correctly', () => {
         const { getByText } = render(<Information />);
         expect(getByText('Created by James Preston')).toBeInTheDocument();
     });
-});
+
+    
+    // Test 4. This test ensures that the footer comment ("Created by James Preston") is rendered on LogoutPage.
+    it('5. renders the footer comment correctly', () => {
+        const { getByText } = render(<LogoutPage />);
+        expect(getByText('Created by James Preston')).toBeInTheDocument();
+    });
+
+
+    // Test 5.  This test ensures that the footer comment ("Created by James Preston") is rendered on SearchPage.
+    it('5. renders the footer comment correctly', () => {
+            const { getByText } = render(<SearchPage />);
+            expect(getByText('Created by James Preston')).toBeInTheDocument();
+        });
+

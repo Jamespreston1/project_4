@@ -1,3 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import App from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/App.jsx';
+import data from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js'
+
 function SearchPage({ selectedItems, setSelectedItems }) {
     const [filter, setFilter] = useState('');
     const [filteredData, setFilteredData] = useState(data);

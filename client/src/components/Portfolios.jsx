@@ -1,3 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import App from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/App.jsx'
+
+
 function Portfolios({ selectedItems, setSelectedItems }) {
     const deleteItem = (index) => {
       const newSelectedItems = [...selectedItems];
