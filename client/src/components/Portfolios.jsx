@@ -1,13 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import App from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/App.jsx'
+import { supabase } from "./../supabase.js";
 
 
 function Portfolios({ selectedItems, setSelectedItems }) {
-    const deleteItem = (index) => {
-      const newSelectedItems = [...selectedItems];
+    const[insertPortfolio, setinsertPortfolio] = useState([])
+    const deleteItem = async (index,id) => {
+
+const { error } = await supabase
+.from('securities')
+.delete()
+.eq('id', id)
+
+      const newSelectedItems = [...insertPortfolio];
       newSelectedItems.splice(index, 1);
-      setSelectedItems(newSelectedItems);
+      setinsertPortfolio(newSelectedItems);
     };
+
+
+    const getPortfolio = async () => {
+    let { data: securities, error } = await supabase
+    .from('securities')
+    .select('*')
+    .eq("email","preston_104@hotmail.com")
+    console.log(securities);
+    setinsertPortfolio(securities)
+    }
+
+        useEffect(()=> {
+    getPortfolio()
+    },[])
   
     return (
       <div className="portfolios-page">
@@ -17,31 +39,19 @@ function Portfolios({ selectedItems, setSelectedItems }) {
               <tr>
                 <th>Remove</th>
                 <th>Ticker</th>
-                <th>Name</th>
-                <th>Total Assets</th>
                 <th>Price</th>
-                <th>1 Year Total Return</th>
-                <th>3 Year Total Return</th>
-                <th>Tracking Error</th>
-                <th>Expense Ratio</th>
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
-              {selectedItems.map((item, index) => (
+              {insertPortfolio.map((item, index) => (
                 <tr key={index}>
                   <td>
-                    <button onClick={() => deleteItem(index)}>Remove</button> 
+                    <button onClick={() => deleteItem(index,item.id)}>Remove</button> 
                   </td>
-                  <td>{item.Ticker}</td>
-                  <td>{item.Name}</td>
-                  <td>{item['Total Assets']}</td>
-                  <td>{item.Price}</td>
-                  <td>{item['1YR TR%']}%</td>
-                  <td>{item['3YR TR%']}%</td>
-                  <td>{item['Tracking Error']}</td>
-                  <td>{item['Expense Ratio']}%</td>
-                  <td>{item.Description}</td>
+                  <td>{item.ticker}</td>
+                  <td>{item.price}</td>
+                  <td>{item.description}</td>
                 </tr>
               ))}
             </tbody>

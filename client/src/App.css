@@ -20,11 +20,18 @@ body {
   padding-top: 60px;
 }
 
-.home-page h1,p {
-  margin-top:0px;
-  justify-content: center;
-  color:black;
+.home-page h1 {
+  margin-top: 0;  
+  padding-top: 0; 
+  justify-content: center; 
+  color: black;
 }
+
+.home-page p {
+  justify-content: center; 
+  color: black;
+}
+
 
 .footerComment {
   margin-bottom: 10px;
@@ -59,7 +66,7 @@ body {
 
 .search-filters input[type="text"] {
   border: 1px solid #000;
-  background-color: black;
+  background-color: white;
   padding: 10px 20px;
   margin-right: 10px;
   transition: border-color 0.3s;
@@ -261,10 +268,11 @@ button:hover {
   background-color: #0056b3;
 }
 
-
 .logout-page {}
 
-
+.login-container h1 {
+  color:black;
+}
 
 .sign-up-page {
   position: absolute;

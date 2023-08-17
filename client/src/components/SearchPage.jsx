@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import App from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/src/App.jsx';
 import data from '/Users/jamespreston/sei-course/classwork/Projects/Project_4/my-project/client/data.js'
+import { supabase } from '../supabase';
 
 function SearchPage({ selectedItems, setSelectedItems }) {
     const [filter, setFilter] = useState('');
@@ -25,13 +26,32 @@ function SearchPage({ selectedItems, setSelectedItems }) {
       setTempSelectedItems([]);
     };
   
-    const buildPortfolio = () => {
+    // integrating everything into supabase
+    const buildPortfolio = async () => {
+    const  data2    = await supabase.auth.getUser()
+    const input = tempSelectedItems.map(item => {
+      return({ticker:item.Ticker,description:item.Description,price:item.Price,email:data2.data.user.email})
+    })
+    console.log(input)
+        const { data, error } = await supabase
+        .from('securities')
+        .insert(input)
+        .select()
+    
+      
+      console.log(data);
+      console.log(error);
+    
+      console.log(data2)
       setSelectedItems(tempSelectedItems);
+      console.log(tempSelectedItems)
       setTempSelectedItems([]);
     };
   
     const handleCheckboxChange = (item, isChecked) => {
+      console.log(item);
       if (isChecked) {
+      
         setTempSelectedItems([...tempSelectedItems, item]);
       } else {
         setTempSelectedItems(tempSelectedItems.filter(selectedItem => selectedItem !== item));
@@ -46,7 +66,7 @@ function SearchPage({ selectedItems, setSelectedItems }) {
           <button onClick={filterByName}>Filter by Name</button>
           <button onClick={filterByDescription}>Filter by Description</button>
           <button onClick={resetFilter}>Reset</button>
-          <button   style={{backgroundColor: tempSelectedItems.length > 0 ? 'green' : 'grey'}} onClick={buildPortfolio}
+          <button   style={{backgroundColor: tempSelectedItems.length > 0 ? 'green' : 'grey'}} onClick={()=>{buildPortfolio()}}
   >
     Build My Portfolio
   </button>
