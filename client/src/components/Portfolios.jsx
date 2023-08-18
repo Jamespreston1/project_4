@@ -39,7 +39,7 @@ const { error } = await supabase
           <table>
             <thead>
               <tr>
-                <th>Remove</th>
+                <th className="portfolioRemove">Remove</th>
                 <th>Ticker</th>
                 <th>Price</th>
                 <th>Description</th>
@@ -49,7 +49,7 @@ const { error } = await supabase
               {insertPortfolio.map((item, index) => (
                 <tr key={index}>
                   <td>
-                    <button onClick={() => deleteItem(index,item.id)}>Remove</button> 
+                    <button className="portfolioRemove" onClick={() => deleteItem(index,item.id)}>Remove</button> 
                   </td>
                   <td>{item.ticker}</td>
                   <td>{item.price}</td>

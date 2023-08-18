@@ -143,6 +143,10 @@ body {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
+.portfolioRemove {
+  colour:white;
+}
+
 .portfolios-page table {
   width: 100%;
   border-collapse: collapse;
@@ -172,7 +176,7 @@ body {
 
 .portfolios-page button {
   border: 1px solid #000;
-  background-color: black;
+  background-color: white;
   padding: 5px 10px;
   cursor: pointer;
   text-align: center;
