@@ -24,7 +24,7 @@ const { error } = await supabase
     let { data: securities, error } = await supabase
     .from('securities')
     .select('*')
-    .eq("email",data2.user.email)
+    .eq("email",data2.data.user.email)
     console.log(securities);
     setinsertPortfolio(securities)
     }
