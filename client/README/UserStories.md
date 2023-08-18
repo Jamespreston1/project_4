@@ -1,0 +1,1 @@
+1. I want to be able to learn about what an ETF is and do research based on the Australian ETF market so I can start out as an entry level investor. 

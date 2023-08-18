@@ -59,7 +59,7 @@ function LogoutPage() {
         {!confirmLogout ? (
           <>
             <h1>Are you sure you want to log out?</h1>
-            <button onClick={handleLogoutConfirmation}>Yes, I want to logout</button>
+            <button onClick={handleLogout}>Yes, I want to logout</button>
           </>
         ) : (
           <>
