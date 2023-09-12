@@ -7,7 +7,7 @@ Description:
 
 * The application allows you to sign in with multiple third party providers (Google, Azure, Github) or with email. It stores your emaiil information in  Supabase for authoriisation, but then uses this information so that your experience is customised when you log back in (i.e. your securities you were looking at are saved!). 
 
-* Integrated is a 'beginner level' database of Australian listed ETF's (just under ~200). This information has been pulled from Bloomberg as hardcoded values (as of date 10th August 2023) - it was stored as a CSV, then converted into JSON format to make it integratable with the applicatioin. 
+* Integrated is a 'beginner level' database of Australian listed ETF's (just under ~200). This information has been pulled from an online provider as hardcoded values (as of date 10th August 2023) - it was stored as a CSV, then converted into JSON format to make it integratable with the applicatioin. 
 
 * Using a Vite React front end framework, coupled with a Supabase database and authorisation management system, there is  flexibiliity and scalability to the program to continually add additional features (saving your ETF's as a specific basket to have multiple portfolios, ontop of this we can then look into Portfolio analytics (average return, industry weighting portfolio attribution and so oon), and expanding the universe of ETF's - even introducing an ETF data API!)
 
